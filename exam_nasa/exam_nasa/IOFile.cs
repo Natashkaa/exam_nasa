@@ -16,9 +16,7 @@ namespace exam_nasa
             if (!File.Exists(path))
             {
                 string json = NetworkManager.GetJson(source);
-                //JObject jobj = JObject.Parse(jsfile);
-                string jsonforsave = JsonConvert.SerializeObject(json, Formatting.Indented);
-                File.WriteAllText(path, jsonforsave);
+                File.WriteAllText(path, json);
             }
         }
         public static string ReadFromFile(string path)

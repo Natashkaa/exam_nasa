@@ -5,15 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:exam_nasa.Infrastructure"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" MinHeight="450" MinWidth="800">
     <Window.DataContext>
         <local:ServiceLocator></local:ServiceLocator>
     </Window.DataContext>
     <Grid DataContext="{Binding MainViewModel}">
-        <Label Content="{Binding Apod.Date}" HorizontalAlignment="Left" Margin="48,36,0,0" VerticalAlignment="Top" Height="30"/>
-        <Label Content="{Binding Apod.Explanation}" HorizontalAlignment="Left" Margin="48,95,0,0" VerticalAlignment="Top" Height="30"/>
-        <Label Content="{Binding Apod.Title}" HorizontalAlignment="Left" Margin="48,165,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding Apod.Url}" HorizontalAlignment="Left" Margin="58,214,0,0" VerticalAlignment="Top"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Source/space_bck.jpg"></ImageBrush>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border BorderThickness="2"></Border>
+            <Image Grid.Row="0" Source="https://upload.wikimedia.org/wikipedia/commons/e/e9/Felis_silvestris_silvestris_small_gradual_decrease_of_quality.png"></Image>
+            <MediaElement Grid.Row="0" Source="{Binding PathVideo}"></MediaElement>
+        </Grid>
 
     </Grid>
 </Window>
