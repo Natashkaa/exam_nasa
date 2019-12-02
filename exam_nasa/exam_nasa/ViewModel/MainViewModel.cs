@@ -1,8 +1,10 @@
 ﻿using exam_nasa.Infrastructure;
 using exam_nasa.Model;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -13,8 +15,8 @@ namespace exam_nasa.ViewModel
     class MainViewModel : Notifier
     {
         HttpClient client = new HttpClient();
-        string BaseUrl => "https://api.nasa.gov/planetary/apod?api_key=lrBmM0yeF0F2YPKojkfieUXagAMRbBghbZPecQK6";
-        string apiKey => "lrBmM0yeF0F2YPKojkfieUXagAMRbBghbZPecQK6";
+        string BaseUrl => "https://api.nasa.gov/DONKI/CME?startDate=2019-05-10&endDate=2019-11-11&api_key=lrBmM0yeF0F2YPKojkfieUXagAMRbBghbZPecQK6";
+        string apiKey => "https://api.nasa.gov/DONKI/CME?startDate=2019-05-10&endDate=2019-11-11&api_key=lrBmM0yeF0F2YPKojkfieUXagAMRbBghbZPecQK6";
         APOD apod;
         public APOD Apod
         {
@@ -27,11 +29,10 @@ namespace exam_nasa.ViewModel
         }
         public MainViewModel()
         {
-            string query = $"{BaseUrl}";
-            var res = client.GetAsync(query).Result;
-            string tmp = res.Content.ReadAsStringAsync().Result;
-            JObject jobj = JObject.Parse(tmp);
-            Apod = jobj.ToObject<APOD>();
+            Task.Run(() =>
+            {
+                Apod = GetUnits.GetApod();
+            });
         }
     }
 }

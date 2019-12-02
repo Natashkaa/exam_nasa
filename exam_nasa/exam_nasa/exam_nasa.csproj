@@ -62,7 +62,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Infrastructure\ServiceLocator.cs" />
+    <Compile Include="IOFile.cs" />
     <Compile Include="Model\APOD.cs" />
+    <Compile Include="Model\Asteroids_NeoWs.cs" />
+    <Compile Include="Model\GetUnits.cs" />
+    <Compile Include="NasaApi\ApiConfig.cs" />
+    <Compile Include="NetworkManager.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

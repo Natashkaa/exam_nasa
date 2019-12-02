@@ -10,7 +10,7 @@
         <local:ServiceLocator></local:ServiceLocator>
     </Window.DataContext>
     <Grid DataContext="{Binding MainViewModel}">
-        <Label Content="{ Binding Apod.Date}" HorizontalAlignment="Left" Margin="48,36,0,0" VerticalAlignment="Top" Height="30"/>
+        <Label Content="{Binding Apod.Date}" HorizontalAlignment="Left" Margin="48,36,0,0" VerticalAlignment="Top" Height="30"/>
         <Label Content="{Binding Apod.Explanation}" HorizontalAlignment="Left" Margin="48,95,0,0" VerticalAlignment="Top" Height="30"/>
         <Label Content="{Binding Apod.Title}" HorizontalAlignment="Left" Margin="48,165,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding Apod.Url}" HorizontalAlignment="Left" Margin="58,214,0,0" VerticalAlignment="Top"/>

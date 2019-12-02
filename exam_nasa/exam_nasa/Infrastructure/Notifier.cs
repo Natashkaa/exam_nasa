@@ -11,7 +11,6 @@ namespace exam_nasa.Infrastructure
     class Notifier : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
         public void Notify([CallerMemberName] string propName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));

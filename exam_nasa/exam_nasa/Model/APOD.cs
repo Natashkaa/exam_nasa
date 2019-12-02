@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace exam_nasa.Model
 {
-    class APOD
+    internal class APOD
     {
         [JsonProperty(PropertyName = "date")]
         public string Date { get; set; }
