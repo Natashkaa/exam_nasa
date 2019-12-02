@@ -9,7 +9,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using VideoLibrary;
 
 namespace exam_nasa.ViewModel
@@ -19,7 +21,6 @@ namespace exam_nasa.ViewModel
         //string BaseUrl => "https://api.nasa.gov/DONKI/CME?startDate=2019-05-10&endDate=2019-11-11&api_key=lrBmM0yeF0F2YPKojkfieUXagAMRbBghbZPecQK6";
         //string apiKey => "https://api.nasa.gov/DONKI/CME?startDate=2019-05-10&endDate=2019-11-11&api_key=lrBmM0yeF0F2YPKojkfieUXagAMRbBghbZPecQK6";
         APOD apod;
-
         public APOD Apod
         {
             get => apod;
@@ -30,34 +31,69 @@ namespace exam_nasa.ViewModel
             }
         }
 
-        string pathVideo;
-        public string PathVideo
+        string pathPod;
+        public string PathPod
         {
-            get => pathVideo;
+            get => pathPod;
             set
             {
-                pathVideo = value;
+                pathPod = value;
                 Notify();
             }
         }
+
+        string dateNow;
+        public string DateNow
+        {
+            get => dateNow;
+            set
+            {
+                dateNow = value;
+                Notify();
+            }
+        }
+
+        ICommand closeWindow;
+        public ICommand CloseWindow => closeWindow ?? (closeWindow = new RelayCommand(x =>
+        {
+            
+        }));
+
+        Thread updateDateNowThread;
         public MainViewModel()
         {
+            updateDateNowThread = new Thread(Updatedate);
+            updateDateNowThread.Start();
+
             Apod = new APOD();
             Apod = GetUnits.GetApod();
+            if (apod.Media_Type == "video")
+            {
+                Task.Run(() =>
+                { GetVideo(); });
+            }
+            else if (apod.Media_Type == "image")//mb
+            {
+                //
+            }
 
-            Task.Run(() =>
-            { GetVideo(); });
+
+
         }
 
         void GetVideo()
         {
-            //WebClient client = new WebClient();
-            //client.DownloadFile("https://www.youtube.com/embed/ofZTOxC9JQ4?rel=0", @"../Video");
-
             var youtube = YouTube.Default;
             var video = youtube.GetVideo("https://youtu.be/ofZTOxC9JQ4");
-            File.WriteAllBytes($"../video.mpg", video.GetBytes());
-            PathVideo = $"../video.mpg";
+            PathPod = $"../../Video/{apod.Title}.mpg";
+            File.WriteAllBytes(PathPod, video.GetBytes());
+        }
+        void Updatedate()
+        {
+            while (true)
+            {
+                DateNow = DateTime.Now.ToString();
+            }
         }
     }
 }

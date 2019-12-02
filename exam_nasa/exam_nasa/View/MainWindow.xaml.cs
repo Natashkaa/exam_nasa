@@ -24,5 +24,11 @@ namespace exam_nasa.View
         {
             InitializeComponent();
         }
+
+        private void CloseWindow(object sender, RoutedEventArgs e)
+        {
+            MainWin.CloseWindow(sender, e);
+            //MainWin.Close();
+        }
     }
 }

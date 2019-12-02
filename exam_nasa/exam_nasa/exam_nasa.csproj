@@ -171,10 +171,19 @@
     <Resource Include="Source\space_bck.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Source\Mercury Crosses the Sun - YouTube.mp4" />
-    <Content Include="Source\secvideo.mp4" />
-    <Content Include="Source\us.mp4" />
-    <Content Include="Source\video.mp4" />
+    <Resource Include="Source\astronaut.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Source\space_bck_2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Source\gif_bck.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Source\bck_3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Source\close.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

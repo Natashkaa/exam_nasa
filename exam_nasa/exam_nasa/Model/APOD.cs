@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace exam_nasa.Model
 {
-    //[Serializable]
     internal class APOD
     {
         [JsonProperty(PropertyName = "date")]
@@ -16,8 +15,6 @@ namespace exam_nasa.Model
         public string Explanation { get; set; }
         [JsonProperty(PropertyName = "media_type")]
         public string Media_Type { get; set; }
-        //[JsonProperty(PropertyName = "service_version")]
-        //public string Service_Version { get; set; }
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
         [JsonProperty(PropertyName = "url")]
