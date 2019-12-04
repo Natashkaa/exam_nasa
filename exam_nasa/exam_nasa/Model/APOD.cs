@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace exam_nasa.Model
 {
-    internal class APOD : Notifier
+    internal class APOD
     {
         [JsonProperty(PropertyName = "date")]
         public string Date { get; set; }

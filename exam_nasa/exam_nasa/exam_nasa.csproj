@@ -183,16 +183,13 @@
     <Resource Include="Source\bck_3.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Source\close.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Source\loading.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Source\loading2.gif" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Source\loading3.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Source\background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Source\backgrnd.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

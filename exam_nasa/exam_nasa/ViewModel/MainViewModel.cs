@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -12,6 +14,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using VideoLibrary;
 
@@ -19,7 +22,21 @@ namespace exam_nasa.ViewModel
 {
     class MainViewModel : Notifier
     {
+        #region fields
         APOD apod;
+        NearEarthObject nearEarthObject;
+        ObservableCollection<Date> asteroidsList;
+        Date selectedAsteroid;
+        string imagePod;
+        string videoPod;
+        string dateNow;
+        string timeNow;
+        ICommand updateCommand;
+        ICommand clickUrl;
+        Thread updateDateNowThread;
+        #endregion
+
+        #region Properties
         public APOD Apod
         {
             get => apod;
@@ -29,8 +46,24 @@ namespace exam_nasa.ViewModel
                 Notify();
             }
         }
-
-        string imagePod;
+        public ObservableCollection<Date> AsteroidsList
+        {
+            get => asteroidsList;
+            set
+            {
+                asteroidsList = value;
+                Notify();
+            }
+        }
+        public Date SelectedAsteroid
+        {
+            get => selectedAsteroid;
+            set
+            {
+                selectedAsteroid = value;
+                Notify();
+            }
+        }
         public string ImagePod
         {
             get => imagePod;
@@ -40,7 +73,6 @@ namespace exam_nasa.ViewModel
                 Notify();
             }
         }
-        string videoPod;
         public string VideoPod
         {
             get => videoPod;
@@ -50,8 +82,6 @@ namespace exam_nasa.ViewModel
                 Notify();
             }
         }
-        
-        string dateNow;
         public string DateNow
         {
             get => dateNow;
@@ -61,8 +91,6 @@ namespace exam_nasa.ViewModel
                 Notify();
             }
         }
-
-        string timeNow;
         public string TimeNow
         {
             get => timeNow;
@@ -72,31 +100,55 @@ namespace exam_nasa.ViewModel
                 Notify();
             }
         }
+        #endregion
 
-        Thread updateDateNowThread;
+        #region Commands
+        public ICommand UpdateCommand => updateCommand ?? (updateCommand = new RelayCommand(x => GetAllUnits(true)));
+        public ICommand ClickUrl => clickUrl ?? (clickUrl = new RelayCommand(x => Process.Start(SelectedAsteroid.NasaJplUrl)));
+        #endregion
+
+
         public MainViewModel()
         {
             updateDateNowThread = new Thread(Updatedate);
             updateDateNowThread.IsBackground = true;
             updateDateNowThread.Start();
-            
-            Apod = new APOD();
-            Apod = GetUnits.GetApod();
-            
-            if (apod.Media_Type == "video")
-            {
-                Task.Run(() =>
-                { GetVideo(); });
-            }
-            else if (apod.Media_Type == "image")
-            {
-                ImagePod = Apod.Url;
-                Task.Run(() =>
-                { GetImage(); });
-            }
-            
+            GetAllUnits(false);
         }
 
+        void GetAllUnits(bool needUpdate)
+        {
+            Apod = new APOD();
+            Task.Run(() =>
+            {
+                Apod = GetUnits.GetApod(needUpdate);
+                if (apod.Media_Type == "video")
+                {
+                    Task.Run(() =>
+                    { GetVideo(); });
+                }
+                else if (apod.Media_Type == "image")
+                {
+                    ImagePod = Apod.Url;
+                    Task.Run(() =>
+                    { GetImage(); });
+                }
+            });
+            Task.Run(() =>
+            {
+                nearEarthObject = GetUnits.GetAsteroids();
+                AsteroidsList = new ObservableCollection<Date>();
+                foreach (var item in nearEarthObject.Start_Date)
+                {
+                    AsteroidsList.Add(item);
+                }
+                foreach (var item in nearEarthObject.End_Date)
+                {
+                    AsteroidsList.Add(item);
+                }
+
+            });
+        }
         void GetVideo()
         {
             string path = $"../../Video/{apod.Title}.mpg";

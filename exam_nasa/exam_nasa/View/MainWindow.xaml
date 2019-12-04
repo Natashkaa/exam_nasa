@@ -7,7 +7,7 @@
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:local="clr-namespace:exam_nasa.Infrastructure"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"  ResizeMode="NoResize"
+        Title="NasaGov" Height="450" Width="800"  ResizeMode="NoResize"
         Name="MainWin" Closing="MainWin_Closing" WindowStyle="None">
     <Window.Resources>
         <Style x:Key="GifStyle" TargetType="Image">
@@ -108,7 +108,7 @@
     <Grid DataContext="{Binding MainViewModel}">
         
         <Grid.Background>
-            <ImageBrush ImageSource="/Source/bck_3.jpg"></ImageBrush>
+            <ImageBrush ImageSource="/Source/backgrnd.jpg"></ImageBrush>
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"></ColumnDefinition>
@@ -119,15 +119,15 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <materialDesign:Flipper Grid.Row="0" Grid.Column="0">
+        <materialDesign:Flipper Grid.Row="0" Grid.Column="0" Width="200" Margin="0,0,0,0" BorderThickness="0,0,0,1" BorderBrush="LightGray">
             <materialDesign:Flipper.FrontContent>
                 <Button Style="{StaticResource MaterialDesignFlatButton}"
                         Command="{x:Static materialDesign:Flipper.FlipCommand}"
                         Width="184"
                         ToolTip="Current Date"
-                        Content="{Binding DateNow}"
-                        Background="Black" Opacity="0.7"
-                        Foreground="DeepPink"
+                        Content="{Binding TimeNow}"
+                        Background="Transparent" Opacity="0.7"
+                        Foreground="DarkBlue"
                         FontFamily="Segoi UI" FontSize="16"></Button>
             </materialDesign:Flipper.FrontContent>
             <materialDesign:Flipper.BackContent>
@@ -135,9 +135,9 @@
                         Command="{x:Static materialDesign:Flipper.FlipCommand}"
                         Width="184"
                         ToolTip="Current time"
-                        Content="{Binding TimeNow}"
-                        Background="Black" Opacity="0.8"
-                        Foreground="DeepPink"
+                        Content="{Binding DateNow}"
+                        Background="Transparent" Opacity="0.8"
+                        Foreground="DarkBlue"
                         FontFamily="Segoi UI" FontSize="16"></Button>
             </materialDesign:Flipper.BackContent>
         </materialDesign:Flipper>
@@ -158,20 +158,20 @@
 
             <StackPanel Grid.Row="1" Height="180" VerticalAlignment="Top">
                 <Label Content="{Binding Apod.Date}"
-                       Foreground="AliceBlue" FontFamily="Global Sans Serif"
+                       Foreground="Black" FontFamily="Global Sans Serif"
                        FontSize="12" ></Label>
                 <Label>
                     <TextBlock Text="{Binding Apod.Title}" 
                                TextWrapping="Wrap" 
                                VerticalAlignment="Center" 
-                               Foreground="AliceBlue" FontSize="16" FontFamily="Global Sans Serif"></TextBlock>
+                               Foreground="Black" FontSize="16" FontFamily="Global Sans Serif"></TextBlock>
                 </Label>
                 <Label Height="115">
                     <ScrollViewer ClipToBounds="True">
                         <TextBlock Text="{Binding Apod.Explanation}"
                                TextWrapping="Wrap" 
                                VerticalAlignment="Top" 
-                               Foreground="AliceBlue" FontFamily="Global Sans Serif" FontSize="14" ScrollViewer.CanContentScroll="True"></TextBlock>
+                               Foreground="Black" FontFamily="Global Sans Serif" FontSize="14" ScrollViewer.CanContentScroll="True"></TextBlock>
                     </ScrollViewer>
                 </Label>
             </StackPanel>
@@ -179,32 +179,64 @@
 
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
             <Button Style="{StaticResource MaterialDesignFlatButton}" 
-                    Background="Black"  
-                    Foreground="DeepPink"
+                    Background="Transparent"  
+                    Foreground="DarkBlue"
                     ToolTip="Open MarsWeather Window" 
                     Opacity="0.7" 
-                    Width="180">MARS WEATHER</Button>
+                    Width="180"
+                    BorderThickness="1,0,1,0" BorderBrush="LightGray">Mars Weather</Button>
             <Button Style="{StaticResource MaterialDesignFlatButton}" 
-                    Background="Black"  
+                    Background="Transparent"  
                     ToolTip="Update AsteroidsNews" 
                     Opacity="0.7" 
-                    Foreground="DeepPink"
-                    Width="167">AsteroidsNews</Button>
+                    Foreground="DarkBlue"
+                    Width="167"
+                    BorderThickness="1,0,1,0" BorderBrush="LightGray">AsteroidsNews</Button>
             <Button Style="{StaticResource MaterialDesignFlatButton}" 
-                    Background="Black"  
+                    Background="Transparent"  
                     ToolTip="Update All" 
                     Opacity="0.7" 
-                    Foreground="DeepPink"
-                    Width="127">Update</Button>
+                    Foreground="DarkBlue"
+                    Width="127"
+                    BorderThickness="1,0,1,0" BorderBrush="LightGray"
+                    Command="{Binding UpdateCommand}">Update</Button>
             <Button Style="{StaticResource MaterialDesignFlatButton}" 
-                    Background="Black"
+                    Background="Transparent"
                     ToolTip="Exit" 
                     Opacity="0.7"
-                    Foreground="DeepPink"
+                    Foreground="DarkBlue"
                     Click="CloseWindow" 
                     Command="{Binding CloseWindow}"
-                    Width="116">Exit</Button>
+                    Width="125"
+                    BorderThickness="1,0,1,0" BorderBrush="LightGray">Exit</Button>
         </StackPanel>
 
+        <DataGrid Grid.Row="1" Grid.Column="1" 
+                  AutoGenerateColumns="False" 
+                  CanUserAddRows="False" 
+                  CanUserDeleteRows="False" 
+                  CanUserReorderColumns="False"
+                  CanUserResizeColumns="False" 
+                  CanUserResizeRows="False"
+                  HorizontalScrollBarVisibility="Visible"
+                  Background="Transparent"
+                  ItemsSource="{Binding AsteroidsList}"
+                  Foreground="Black" FontSize="14" FontFamily="Global Sans Serif"
+                  BorderThickness="0,1,0,0" BorderBrush="LightGray" GridLinesVisibility="None"
+                  SelectedItem="{Binding SelectedAsteroid}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Asteroid Name" Binding="{Binding Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Absolute_Magnitude" Binding="{Binding Absolute_Magnitude}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Estimated Diameter" Binding="{Binding EstimatedDiameter}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Nasa Jpl Url">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding NasaJplUrl}" Background="Transparent" BorderThickness="0" Foreground="DarkBlue" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=MainViewModel.ClickUrl}"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Diameter" Binding="{Binding EstimatedDiameter.Kilometers}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
