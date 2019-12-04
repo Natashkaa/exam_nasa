@@ -38,6 +38,12 @@
     <Reference Include="libvideo, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\VideoLibrary.2.0.3\lib\netstandard1.1\libvideo.dll</HintPath>
     </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.2.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.2.0\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.6.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.6.0\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
     </Reference>
@@ -111,6 +117,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfAnimatedGif, Version=1.4.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WpfAnimatedGif.1.4.18\lib\net\WpfAnimatedGif.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -168,22 +177,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Source\space_bck.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Source\astronaut.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Source\space_bck_2.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Source\gif_bck.gif" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Source\bck_3.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Source\close.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Source\loading.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Source\loading2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Source\loading3.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

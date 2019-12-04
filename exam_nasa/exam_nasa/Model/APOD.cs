@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using exam_nasa.Infrastructure;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,20 @@ using System.Threading.Tasks;
 
 namespace exam_nasa.Model
 {
-    internal class APOD
+    internal class APOD : Notifier
     {
         [JsonProperty(PropertyName = "date")]
         public string Date { get; set; }
+
         [JsonProperty(PropertyName = "explanation")]
         public string Explanation { get; set; }
+
         [JsonProperty(PropertyName = "media_type")]
         public string Media_Type { get; set; }
+        
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
+
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
     }

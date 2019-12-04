@@ -3,11 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:local="clr-namespace:exam_nasa.Infrastructure"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" MinHeight="450" MinWidth="800"
-        Name="MainWin" >
+        Title="MainWindow" Height="450" Width="800"  ResizeMode="NoResize"
+        Name="MainWin" Closing="MainWin_Closing" WindowStyle="None">
     <Window.Resources>
+        <Style x:Key="GifStyle" TargetType="Image">
+            <Setter Property="gif:ImageBehavior.AnimatedSource" Value="/Source/loading3.gif"></Setter>
+        </Style>
         <Style x:Key="ScrollBarLineButtonStyle" TargetType="{x:Type RepeatButton}">
             <Setter Property="Focusable" Value="False"/>
             <Setter Property="Template">
@@ -110,56 +115,96 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.07*"></RowDefinition>
+            <RowDefinition Height="0.08*"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        
-        <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Content="{Binding DateNow}" FontSize="14" Foreground="AliceBlue" FontFamily="Airstrike"/>
-        
-        <Button Grid.Row="0" Grid.Column="1" 
-                HorizontalAlignment="Right" 
-                Width="30" Height="30" 
-                BorderThickness="0"
-                Click="CloseWindow"
-                Command="{Binding CloseWindow}">
-            <Button.Background>
-                <ImageBrush ImageSource="/Source/close.ico"></ImageBrush>
-            </Button.Background>
-        </Button>
+
+        <materialDesign:Flipper Grid.Row="0" Grid.Column="0">
+            <materialDesign:Flipper.FrontContent>
+                <Button Style="{StaticResource MaterialDesignFlatButton}"
+                        Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                        Width="184"
+                        ToolTip="Current Date"
+                        Content="{Binding DateNow}"
+                        Background="Black" Opacity="0.7"
+                        Foreground="DeepPink"
+                        FontFamily="Segoi UI" FontSize="16"></Button>
+            </materialDesign:Flipper.FrontContent>
+            <materialDesign:Flipper.BackContent>
+                <Button Style="{StaticResource MaterialDesignFlatButton}"
+                        Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                        Width="184"
+                        ToolTip="Current time"
+                        Content="{Binding TimeNow}"
+                        Background="Black" Opacity="0.8"
+                        Foreground="DeepPink"
+                        FontFamily="Segoi UI" FontSize="16"></Button>
+            </materialDesign:Flipper.BackContent>
+        </materialDesign:Flipper>
         
         <Grid Grid.Column="0" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="200"></RowDefinition>
-                <RowDefinition></RowDefinition>
+                <RowDefinition Name="Roww" Height="500"></RowDefinition>
             </Grid.RowDefinitions>
             
-            <Image Grid.Row="0" Source="{Binding PathPod}" Stretch="UniformToFill"></Image>
-            
-            <MediaElement Name="Video" Grid.Row="0" Source="{Binding PathPod}"></MediaElement>
+            <Image Grid.Row="0" Stretch="Fill" Style="{DynamicResource GifStyle}" Height="100" Width="100" ></Image>
+            <Ellipse>
+                <Ellipse.Fill>
+                    <ImageBrush  ImageSource="{Binding ImagePod}" Stretch="UniformToFill"></ImageBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+            <MediaElement Name="Video" Grid.Row="0" UnloadedBehavior="Manual" Source="{Binding VideoPod}" MediaEnded="Video_MediaEnded"></MediaElement>
 
-            <StackPanel Grid.Row="1">
+            <StackPanel Grid.Row="1" Height="180" VerticalAlignment="Top">
                 <Label Content="{Binding Apod.Date}"
-                       Foreground="AliceBlue" FontFamily="Airstrike"
-                       FontSize="14" ></Label>
+                       Foreground="AliceBlue" FontFamily="Global Sans Serif"
+                       FontSize="12" ></Label>
                 <Label>
                     <TextBlock Text="{Binding Apod.Title}" 
-                               ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                TextWrapping="Wrap" 
                                VerticalAlignment="Center" 
-                               Foreground="AliceBlue" FontFamily="Airstrike" FontSize="16"></TextBlock>
+                               Foreground="AliceBlue" FontSize="16" FontFamily="Global Sans Serif"></TextBlock>
                 </Label>
-                <Label Height="auto">
-                    <ScrollViewer Foreground="#FF45919C" BorderBrush="#FFB45151" OpacityMask="#FF290938">
-                        
+                <Label Height="115">
+                    <ScrollViewer ClipToBounds="True">
                         <TextBlock Text="{Binding Apod.Explanation}"
                                TextWrapping="Wrap" 
-                               VerticalAlignment="Bottom" 
-                               Foreground="AliceBlue" FontFamily="Airstrike" FontSize="14" ScrollViewer.CanContentScroll="True"
-                               ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBlock>
+                               VerticalAlignment="Top" 
+                               Foreground="AliceBlue" FontFamily="Global Sans Serif" FontSize="14" ScrollViewer.CanContentScroll="True"></TextBlock>
                     </ScrollViewer>
                 </Label>
             </StackPanel>
         </Grid>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
+            <Button Style="{StaticResource MaterialDesignFlatButton}" 
+                    Background="Black"  
+                    Foreground="DeepPink"
+                    ToolTip="Open MarsWeather Window" 
+                    Opacity="0.7" 
+                    Width="180">MARS WEATHER</Button>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" 
+                    Background="Black"  
+                    ToolTip="Update AsteroidsNews" 
+                    Opacity="0.7" 
+                    Foreground="DeepPink"
+                    Width="167">AsteroidsNews</Button>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" 
+                    Background="Black"  
+                    ToolTip="Update All" 
+                    Opacity="0.7" 
+                    Foreground="DeepPink"
+                    Width="127">Update</Button>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" 
+                    Background="Black"
+                    ToolTip="Exit" 
+                    Opacity="0.7"
+                    Foreground="DeepPink"
+                    Click="CloseWindow" 
+                    Command="{Binding CloseWindow}"
+                    Width="116">Exit</Button>
+        </StackPanel>
 
     </Grid>
 </Window>

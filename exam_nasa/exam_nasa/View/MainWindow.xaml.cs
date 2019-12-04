@@ -27,8 +27,19 @@ namespace exam_nasa.View
 
         private void CloseWindow(object sender, RoutedEventArgs e)
         {
-            MainWin.CloseWindow(sender, e);
+            //MainWin.CloseWindow(sender, e);
             //MainWin.Close();
+        }
+
+        private void Video_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            Video.Position = TimeSpan.FromMilliseconds(1);
+            //Video.Play();
+        }
+
+        private void MainWin_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Video.Stop();
         }
     }
 }
